@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+*.o
 
 # Distribution / packaging
 .Python
@@ -51,22 +52,6 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
-*.log
-.static_storage/
-.media/
-local_settings.py
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
 # PyBuilder
 target/
 
@@ -103,3 +88,33 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Cython
+*.egg
+*.egg-info
+
+Cython/Compiler/*.c
+Cython/Plex/*.c
+Cython/Runtime/refnanny.c
+Cython/Tempita/*.c
+
+Tools/*.elc
+
+TEST_TMP/
+build/
+wheelhouse*/
+!tests/build/
+dist/
+.gitrev
+.coverage
+*.orig
+*.rej
+*.dep
+*.swp
+*~
+
+tags
+TAGS
+MANIFEST
+
+.tox
