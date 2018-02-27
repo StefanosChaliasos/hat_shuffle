@@ -1,8 +1,10 @@
 from bplib.bp import BpGroup
+#  from libffpy import Libffpy
 
 
 def gen_params_bp_g2(nid=713):
     G = BpGroup()
+    #  G = Libffpy(nid)
     g = G.gen2()
     o = G.order()
     return (G, g, o)

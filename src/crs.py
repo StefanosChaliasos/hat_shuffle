@@ -1,4 +1,5 @@
 from bplib import bp
+#  from libffpy import Libffpy
 from collections import namedtuple
 from pisgen import generate_pis, generate_pi_hats
 
@@ -26,8 +27,10 @@ CRS_T = namedtuple(
               "crs_sm", "crs_1sp", "crs_con"])
 
 
+#  def mk_gk(n=713):
 def mk_gk():
     G = bp.BpGroup()
+    #  G = Libffpy(n)
     q = G.order()
     g1 = G.gen1()
     g2 = G.gen2()
@@ -55,6 +58,7 @@ def mk_crs_1sp(gk, Chi, polys, poly_zero, poly_hats):
     g1_alpha_poly_zero = (Chi.alpha + poly_zero) * gk.g1
     g1_poly_zero = poly_zero * gk.g1
     inv_rho = Chi.rho.mod_inverse(gk.q)
+    #  inv_rho = Chi.rho.mod_inverse(gk.q)
     g1_poly_squares = []
     for poly in polys:
         numer = (poly + poly_zero) ** 2 - 1
