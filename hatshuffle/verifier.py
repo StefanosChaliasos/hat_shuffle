@@ -1,4 +1,5 @@
 from bplib.bp import GTElem
+# from libffpy import GTPy
 import prover
 from functools import reduce
 
@@ -20,6 +21,7 @@ def step2(gk, g1_a, g2_b, g1_hat_a, g1_sum, g2_sum, g1_hat_sum):
 
 def get_infT(gk):
     return GTElem.one(gk.G)
+    # return GTPy.one()
 
 
 def step3(gk, g1_a, g2_b, g1_c, crs_1sp, g2_rho):

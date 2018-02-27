@@ -21,10 +21,13 @@ def lagrangian(i, n, chi, q):
             continue
 
         numerator = numerator.mod_mul(chi - j, q)
+        # numerator *= chi - j
         elem = i - j
         denominator = denominator.mod_mul(elem, q)
+        # denominator *= elem
 
     return numerator.mod_mul(denominator.mod_inverse(q), q)
+    # return numberator * denominator.mod_inverse()
 
 def compute_denominators(k, q):
     """Computes denominators for Lagrange basis polynomials.
@@ -42,21 +45,21 @@ def compute_denominators(k, q):
             for j in range(2, k+1):
                 elem = i - j;
                 temp = temp.mod_mul(elem, q)
-                # we don't have mod_mul
+                # temp *= elem
         elif i == k:
             elem = 1 - k;
             temp = temp.mod_mul(elem, q)
-            # we don't have mod_mul
+            # temp *= elem
         else:
             inverse = Bn(i - 1 - k)
             #  inverse = BigNum(i - 1 - k)
             inverse = inverse.mod_inverse(q)
-            #  inverse = inverse.mod_inverse(q)
+            #  inverse = inverse.mod_inverse()
             elem = i - 1
             temp = temp.mod_mul(elem, q)
-            # we don't have mod_mul
+            # temp *= elem
             temp = temp.mod_mul(inverse, q)
-            # we don't have mod_mul
+            # temp *= inverse
         denominators.append(temp)
     return denominators
 
@@ -80,7 +83,7 @@ def compute_denominators_slow(k, q):
                 continue
             elem = i - j
             denominator = denominator.mod_mul(elem, q)
-            #  we don't have mod_mul
+            # denominator *= elem
         denominators.append(denominator)
     return denominators
 
@@ -110,7 +113,7 @@ def generate_pis(chi, n, q):
     # prod = (x - w_1) (x - w_2) ... (x - w_{n+1})
     for j in range(1, n + 2):
         prod = prod.mod_mul(chi - j, q)
-        #  we don't have mod_mul
+        # prod *= (chi - j)
 
     # denoms[0] = 1 / (w_1 - w_2) (w_1 - w_3) ... (w_1 - w_{n + 1})
     # denoms[1] = 1 / (w_2 - w_1) (w_2 - w_3) ... (w_2 - w_{n + 1})
@@ -120,24 +123,24 @@ def generate_pis(chi, n, q):
     missing_factor = chi - (n + 1)
 
     ln_plus1 = prod.mod_mul(missing_factor.mod_inverse(q), q)
-    #  we don't have mod_mul
+    # ln_plus1 = prod * missing_factor.mod_inverse()
     ln_plus1 = ln_plus1.mod_mul(denoms[n].mod_inverse(q), q)
-    #  we don't have mod_mul
+    # ln_plus1 *= denoms[n].mod_inverse()
 
     # P_0 is special
     pis.append(ln_plus1.mod_sub(Bn(1), q))
-    #  pis.append(ln_plus1.mod_sub(BigNum(1), q))  #  we don't have mod_sub
+    #  pis.append(ln_plus1 - BigNum(1))
 
     two = Bn(2)
     #  two = BigNum(2)
     for i in range(1, n + 1):
         missing_factor = chi - i
         l_i = prod.mod_mul(missing_factor.mod_inverse(q), q)
-        #  l_i = prod.mod_mul(missing_factor.mod_inverse(q), q)  # we don' t ..
+        #  l_i = prod * missing_factor.mod_inverse()
         l_i = l_i.mod_mul(denoms[i - 1].mod_inverse(q), q)
-        #  l_i = l_i.mod_mul(denoms[i - 1].mod_inverse(q), q)
+        #  l_i *= denoms[i - 1].mod_inverse()
         pis.append(two.mod_mul(l_i, q).mod_add(ln_plus1, q))
-        #  pis.append(two.mod_mul(l_i, q).mod_add(ln_plus1, q))
+        #  pis.append(two * l_i + ln_plus1)
 
     return pis
 
