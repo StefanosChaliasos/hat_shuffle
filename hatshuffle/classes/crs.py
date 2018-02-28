@@ -121,7 +121,6 @@ class CRS:
         It returns a list with the values of the n polynomials \hat{P}_i(chi).
         """
         hpis = []
-        # TODO check % in libffpy
         #  hpi = self.chi**(self.n+1) % self.order
         #  hpis = [ hpi**(i+1) % self.order for i in range(1, self.n+1)]
         hpi = self.chi**(self.n+1)

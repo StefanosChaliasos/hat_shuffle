@@ -61,8 +61,8 @@ class Verifier:
 
 
     def step4(self, g1_d, g1_a, g1_hat_a):
-        g2_beta = crs_sm.g2_beta
-        g2_beta_hat = crs_sm.g2_betahat
+        g2_beta = self.crs.g2_beta
+        g2_beta_hat = self.crs.g2_betahat
 
         for d, a, ah in zip(g1_d, g1_a, g1_hat_a):
             left = self.crs.g.pair(d, self.crs.g2)
@@ -84,9 +84,9 @@ class Verifier:
 
 
     def step5(self, g1_t, g1_a_hat, N, M, MP):
-        infT = get_infT()
+        infT = self.get_infT()
         right = [self.crs.g.pair(g1_t, self.crs.pk[i]) *
-                 self.crs.g.pair(self.crs.g1_hat_rho, N[i]).inv()
+                 self.crs.g.pair(self.crs.g1_rhohat, N[i]).inv()
                  for i in range(2)]
         left = [infT, infT]
         for i in range(2):
