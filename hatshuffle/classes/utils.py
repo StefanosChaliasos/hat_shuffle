@@ -20,11 +20,11 @@ def mk_t_randoms(n, q):
 
 
 def encrypt_messages(order, pk, messages):
-    return [encdec.encrypt(order, pk, message) for message in messages]
+    return [encrypt(order, pk, message) for message in messages]
 
 
 def decrypt_messages(secret, table, ciphertexts):
-    return [encdec.decrypt(cs, secret, table) for cs in ciphertexts]
+    return [decrypt(cs, secret, table) for cs in ciphertexts]
 
 
 def encrypt(q, pk, m):
