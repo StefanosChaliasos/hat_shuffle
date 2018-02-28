@@ -29,10 +29,10 @@ class CRS:
         self.poly_hats = self.generate_pi_hats()
 
         self.pk = (self.g2, self.chi * self.g2)
-        self.g1_polys = list(map(lambda poly: poly * self.g1, polys))
-        self.g1rho = self.rho * self.g1
-        self.g2_polys = list(map(lambda poly: poly * self.g2, polys))
-        self.g2rho = self.rho * self.g2
+        self.g1_polys = list(map(lambda poly: poly * self.g1, self.polys))
+        self.g1_rho = self.rho * self.g1
+        self.g2_polys = list(map(lambda poly: poly * self.g2, self.polys))
+        self.g2_rho = self.rho * self.g2
 
         # crs_sm
         self.g1_beta_polys = []
@@ -61,12 +61,13 @@ class CRS:
         self.g2alpha = (-self.alpha + self.poly_zero) * self.g2
         self.g2_sum = self.poly_sum * self.g2
         #  GT
-        self.pair_alpha = self.gt ** ((1 - self.alpha ** 2) % self.order)
+        #  self.pair_alpha = self.gt ** ((1 - self.alpha ** 2) % self.order)
+        self.pair_alpha = self.gt ** (1 - self.alpha ** 2)
 
         #  crs_con
         self.g1_poly_hats = list(map(lambda poly_hat: poly_hat * self.g1,
                                      self.poly_hats))
-        self.g1rhohat = self.rhohat * self.g1
+        self.g1_rhohat = self.rhohat * self.g1
 
         self.trapdoor = (self.chi, self.rhohat)
 
@@ -121,8 +122,10 @@ class CRS:
         """
         hpis = []
         # TODO check % in libffpy
-        hpi = self.chi**(self.n+1) % self.order
-        hpis = [ hpi**(i+1) % self.order for i in range(1, self.n+1)]
+        #  hpi = self.chi**(self.n+1) % self.order
+        #  hpis = [ hpi**(i+1) % self.order for i in range(1, self.n+1)]
+        hpi = self.chi**(self.n+1)
+        hpis = [ hpi**(i+1) for i in range(1, self.n+1)]
 
         return hpis
 
